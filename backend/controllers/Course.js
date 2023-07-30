@@ -8,8 +8,16 @@ require("dotenv").config();
 exports.createCource = async (req, res) => {
   try {
     // fth ata
-    const { courseName, courseDescription, whatYouWillLearn, price, tag } =
-      req.body;
+    const {
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      status,
+      tag,
+      category,
+      instructions,
+    } = req.body;
 
     // gt thumbnail
     const thumbnail = req.file.thumbnailImg;
@@ -22,7 +30,8 @@ exports.createCource = async (req, res) => {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag
+      !tag ||
+      !category
     ) {
       return res.status(400).json({
         success: false,
@@ -30,9 +39,15 @@ exports.createCource = async (req, res) => {
       });
     }
 
+    if (!status || status === undefined) {
+      status = "Draft";
+    }
+
     // check for instructor
     const userId = req.user.id;
-    const instructorDetails = await User.findById(userId);
+    const instructorDetails = await User.findById(userId, {
+      accounttype: "Instructor",
+    });
     console.log(instructorDetails);
 
     if (!instructorDetails) {
@@ -44,11 +59,11 @@ exports.createCource = async (req, res) => {
 
     // tag validation
 
-    const tagDetails = await Tag.findById(tag);
-    if (!tagDetails) {
+    const categoryDetails = await Category.findById(category);
+    if (!categoryDetails) {
       return res.status(400).json({
         success: false,
-        message: "tag details not found",
+        message: "categoryDetails details not found",
       });
     }
 
@@ -63,8 +78,11 @@ exports.createCource = async (req, res) => {
       instructor: instructorDetails._id,
       whatYouWillLearn: whatYouWillLearn,
       price,
-      tag: tagDetails._id,
+      tag: tag,
+      category: categoryDetails._id,
       picture: thumbnailImg.secure_url,
+      status: status,
+      instructions: instructions,
     });
 
     // user ko update karna hai instructor ki list me dal do is cource ko
@@ -78,13 +96,22 @@ exports.createCource = async (req, res) => {
       { new: true }
     );
 
-    // update tag ka schema
+    // Add the new course to the Categories
+    await Category.findByIdAndUpdate(
+      { _id: category },
+      {
+        $push: {
+          course: newCourse._id,
+        },
+      },
+      { new: true }
+    );
 
     // return responce
     return res.status(200).json({
       success: true,
       message: "cource created successfully",
-      ata: newCourse,
+      data: newCourse,
     });
   } catch (err) {
     console.error(err);
@@ -97,7 +124,7 @@ exports.createCource = async (req, res) => {
 
 // get all cources handler functoon
 
-exports.showAllours = async (rq, res) => {
+exports.showAllCource = async (req, res) => {
   try {
     const allCources = await Course.find({}).populate("instructor").exec();
 
@@ -112,6 +139,49 @@ exports.showAllours = async (rq, res) => {
       success: false,
       message: "can not fetch course data",
       error: err.message,
+    });
+  }
+};
+
+// get cource details handler function
+exports.getCourseDetails = async (req, res) => {
+  try {
+    // get course id
+    const { courseId } = req.body;
+    // get course details
+    const courseDetails = await Course.find({ _id: courseId })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionaldetails",
+        },
+      })
+      .populate("category")
+      .populate("ratingAndReviews")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+    // validation
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: "can not get course with details",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "course details fetched successfully",
+      data: courseDetails,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: true,
+      message: err.message,
     });
   }
 };
