@@ -7,15 +7,19 @@ import Blackbutton from "../Components/Core/homepage/Blackbutton";
 import Button from "../Components/Core/homepage/Button";
 import Banner from "../assets/Images/banner.mp4";
 import Codeblocks from "../Components/Core/homepage/Codeblocks";
+import Timelinesection from "../Components/Core/homepage/Timelinesection";
+import SwissKnife from "../Components/Core/homepage/SwissKnife";
+import Becomeinstructor from "../Components/Core/homepage/Becomeinstructor";
+import Exploremore from "../Components/Core/homepage/Exploremore";
 
 function Home() {
   return (
-    <div className=" relative w-11/12 mx-auto flex flex-col items-center text-richblack-25 justify-between  ">
+    <div className=" relative w-screen  mx-auto flex flex-col items-center text-richblack-25 justify-between  ">
       {/* section 1  */}
-      <div>
+      <div className="  bg-richblack-900">
         {/* main button uper vala  */}
         <Link to={"/signup"}>
-          <div className="mx-auto mt-16 rounded-full hover:bg-richblack-800  bg-richblack-700 font-bold transition-all duration-200 hover:scale-95 w-fit ">
+          <div className="mx-auto mt-16  rounded-full hover:bg-richblack-800  bg-richblack-700 font-bold transition-all duration-200 hover:scale-95 w-fit ">
             <div className=" px-6 py-3 text-richblack-300 transition-all duration-200 group-hover:bg-richblack-800 ">
               <p className=" flex items-center ">
                 Become An Instructor
@@ -40,7 +44,12 @@ function Home() {
 
         {/* 2 buttons  */}
         <div className=" text-center  text-lg mx-auto mt-6">
-          <Button children={"Leran More"} linkto={"/signup"} active={1} />
+          <Button
+            children={"Leran More"}
+            linkto={"/signup"}
+            arrow={1}
+            active={1}
+          />
           <Button children={"Book a Demo"} linkto={"/login"} />
         </div>
 
@@ -81,10 +90,10 @@ function Home() {
 
         <div className="flex ">
           <Codeblocks
-           
             heading={
               <>
-              Start<Highlightedtext text={" coding in seconds"} />
+                Start
+                <Highlightedtext text={" coding in seconds"} />
               </>
             }
             active={1}
@@ -106,10 +115,50 @@ function Home() {
             codecolor={" text-yellow-25"}
           />
         </div>
+        
+          <Exploremore />
+    
       </div>
       {/* section 2  */}
 
-      {/* section 3  */}
+      <div className=" bg-pure-greys-5 text-richblack-700 w-full">
+        <div className=" h-[333px] homegapebg   flex items-center justify-center">
+          <Button
+            active={1}
+            arrow={1}
+            children={"Explore Full Catalog"}
+            linkto={"/signup"}
+          />
+          <Button children={"Learn More"} linkto={"/signup"} />
+        </div>
+        <div className=" flex mx-24 w-11/12 m-16">
+          <div className="mx-auto  font-semibold text-4xl w-[50%]">
+            Get the skills you need for a{" "}
+            <Highlightedtext text={"job that is in demand."} />
+          </div>
+          <div className=" mx-24 flex flex-col   w-[50%]">
+            <div className="text-lg text-richblack-300  ">
+              The modern StudyNotion is the dictates its own terms. Today, to be
+              a competitive specialist requires more than professional skills.
+            </div>
+            <div className=" mt-10 ">
+              <Button children={"Learn More"} active={1} linkto={"/signup"} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className=" mx-auto   bg-pure-greys-5 text-richblack-700  w-full">
+        <Timelinesection />
+      </div>
+
+      <div className=" mx-auto   bg-pure-greys-5 text-richblack-700  w-full">
+        <SwissKnife />
+      </div>
+
+      {/* section 3 become a instrutor  */}
+      <div className=" bg-richblack-900 w-screen  ">
+        <Becomeinstructor />
+      </div>
 
       {/* footer  */}
     </div>

@@ -29,7 +29,7 @@ function Codeblocks({
         </div>
         <div className="text-lg text-richblack-300 mt-6">{subheading}</div>
         <div className="  text-lg mt-6">
-          <Button linkto={"/signup"} active={active} className="flex">
+          <Button linkto={"/signup"} arrow={1} active={active} className="flex">
             {btn1}
             {/* <AiOutlineArrowRight /> */}
           </Button>
