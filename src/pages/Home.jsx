@@ -11,6 +11,7 @@ import Timelinesection from "../Components/Core/homepage/Timelinesection";
 import SwissKnife from "../Components/Core/homepage/SwissKnife";
 import Becomeinstructor from "../Components/Core/homepage/Becomeinstructor";
 import Exploremore from "../Components/Core/homepage/Exploremore";
+import Footer from "../Components/Common/Footer";
 
 function Home() {
   return (
@@ -115,9 +116,8 @@ function Home() {
             codecolor={" text-yellow-25"}
           />
         </div>
-        
-          <Exploremore />
-    
+
+        <Exploremore />
       </div>
       {/* section 2  */}
 
@@ -161,6 +161,7 @@ function Home() {
       </div>
 
       {/* footer  */}
+      <Footer />
     </div>
   );
 }

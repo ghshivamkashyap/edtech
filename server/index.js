@@ -41,6 +41,7 @@ cloudinaryConnect();
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
+// http://localhost:4000/api/v1/course/showAllCategories
 app.use("/api/v1/payment", paymentRoutes);
 
 //def route
