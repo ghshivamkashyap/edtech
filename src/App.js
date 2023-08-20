@@ -11,10 +11,15 @@ import Error from "./pages/Error";
 import Forgotpassword from "./pages/Forgotpassword";
 import Updatepassword from "./pages/Updatepassword";
 import Varifyemail from "./pages/Varifyemail";
+import About from "./pages/About";
+import Contactus from "./pages/Contactus";
+import Dashboard from "./pages/Dashboard";
+import Myprofile from "./Components/Core/dashboard/Myprofile";
+import Privateroute from "./Components/Core/auth/Privateroute";
 
 function App() {
   return (
-    <div className=" w-screen bg-richblack-900  flex flex-col font-inter ">
+    <div className=" w-screen text-richblack-25 bg-richblack-900  flex flex-col font-inter ">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -48,6 +53,18 @@ function App() {
           }
         />
         {/* error route  */}
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contactus />} />
+        <Route
+          element={
+            <Privateroute>
+              <Dashboard />
+            </Privateroute>
+          }
+        >
+          <Route path="dashboard/my-profile" element={<Myprofile />} />
+        </Route>
+
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

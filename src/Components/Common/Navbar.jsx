@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { apiConnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
+import ProfileDropdown from "../Core/auth/Profiledropdown";
 // require("dotenv").config();
 
 function Navbar() {
@@ -117,10 +118,12 @@ function Navbar() {
           {/* cart  */}
           {user && user?.accountType !== "Instructor" && (
             <Link className=" relative " to="/dashboard/cart">
-              <AiOutlineShoppingCart className=" text-white " />
+              <AiOutlineShoppingCart size={25} className=" text-white items-center justify-center " />
               {totalItems > 0 && <span>{totalItems}</span>}
             </Link>
           )}
+      
+          {token !== null && <ProfileDropdown />}
 
           {/* login btn  */}
           {token === null && (
@@ -145,7 +148,7 @@ function Navbar() {
           )}
 
           {/* token null nahi hai  */}
-          {token !== null && <Profiledropdown />}
+          {/* {token !== null && <Profiledropdown />} */}
         </div>
       </div>
     </div>
