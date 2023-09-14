@@ -1,5 +1,6 @@
 import React from "react";
 import * as Icons from "react-icons/vsc";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { NavLink, matchPath, useLocation } from "react-router-dom";
 
@@ -24,43 +25,20 @@ function Sidebarlinks({ link, iconName }) {
       ></span>
 
       <div className="flex item-center gap-x-2">
-        <Icon className="text-lg" />
-        <span>{link.name}</span>
+        {iconName === "AiOutlineShoppingCart" ? (
+          <div className=" flex gap-x-2 ">
+            <AiOutlineShoppingCart className=" text-lg " />
+            <span>{link.name}</span>
+          </div>
+        ) : (
+          <div className=" flex gap-x-2 ">
+            <Icon className=" text-lg " />
+            <span>{link.name}</span>
+          </div>
+        )}
       </div>
     </NavLink>
   );
 }
 
 export default Sidebarlinks;
-
-// import React from "react";
-// import * as Icons from "react-icons/vsc";
-// import { useDispatch } from "react-redux";
-// import { NavLink, useLocation } from "react-router-dom";
-
-// function Sidebarlinks({ link, iconName }) {
-//   const Icon = Icons[iconName];
-//   const location = useLocation();
-//   const dispatch = useDispatch();
-
-//   const matchRoute = (route) => {
-//     return location.pathname.startsWith(route.path);
-//   };
-
-//   const linkClassNames = `${
-//     matchRoute(link.path)
-//       ? "bg-yellow-50 border-r-4 border-yellow-100"
-//       : "bg-opacity-0  "
-//   } relative px-8 py-2 text-sm font-medium`;
-
-//   return (
-//     <NavLink to={link.path} className={linkClassNames}>
-//       <div className="flex items-center">
-//         <Icon className="text-lg" />
-//         <span>{link.name}</span>
-//       </div>
-//     </NavLink>
-//   );
-// }
-
-// export default Sidebarlinks;

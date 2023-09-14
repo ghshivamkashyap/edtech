@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 // import Navbar from "./Components/Core/Common/Navbar";
 import Navbar from "./Components/Common/Navbar";
 import OpenRoute from "./Components/Core/auth/OpenRoute";
@@ -16,8 +16,18 @@ import Contactus from "./pages/Contactus";
 import Dashboard from "./pages/Dashboard";
 import Myprofile from "./Components/Core/dashboard/Myprofile";
 import Privateroute from "./Components/Core/auth/Privateroute";
+import EnrolledCourses from "./Components/Core/dashboard/EnrolledCourses";
+import { useDispatch, useSelector } from "react-redux";
+import Cart from "./Components/Core/dashboard/cart";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import Settings from "./Components/Core/dashboard/settings/Settings";
+import Addcourse from "./Components/Core/dashboard/addcourse";
 
 function App() {
+  const { user } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const { user } = useSelector((state) => state.profile);
   return (
     <div className=" w-screen text-richblack-25 bg-richblack-900  flex flex-col font-inter ">
       <Navbar />
@@ -63,6 +73,21 @@ function App() {
           }
         >
           <Route path="dashboard/my-profile" element={<Myprofile />} />
+          <Route path="dashboard/settings" element={<Settings />} />
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="dashboard/cart" element={<Cart />} />
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+            </>
+          )}
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/add-course" element={<Addcourse />} />
+            </>
+          )}
         </Route>
 
         <Route path="*" element={<Error />} />

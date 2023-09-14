@@ -20,7 +20,7 @@ function Sidebar() {
     return <div>Loading...</div>;
   }
   return (
-    <div className=" flex flex-col bg-richblack-800 py-10 h-[100vh] min-w-[222px] border-r-[1px] border-richblack-700 ">
+    <div className=" flex flex-col   bg-richblack-800 py-10 h-auto min-w-[222px] border-r-[1px] border-richblack-700 ">
       <div className="flex flex-col">
         {sidebarLinks.map((link) => {
           if (link.type && user?.accountType !== link.type) return null;

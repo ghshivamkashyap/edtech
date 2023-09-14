@@ -56,37 +56,53 @@ function Varifyemail() {
               A verification code has been sent to you. Enter the code below
             </div>
 
-            <form action="" className=" text-richblack-5 " onSubmit={handleOnSubmit}>
+            <form
+              action=""
+              className=" text-richblack-5 "
+              onSubmit={handleOnSubmit}
+            >
               <OTPInput
                 value={otp}
                 onChange={setOtp}
                 numInputs={6}
                 renderSeparator={<span>-</span>}
                 placeholder={"-"}
-                // inputStyle="border border-gray-300 rounded-md px-3 py-2 mr-2 text-center"
-                containerStyle="flex items-center justify-center" // Tailwind CSS classes directly applied
                 renderInput={(props) => (
                   <input
                     {...props}
-                    className=" bg-richblack-800 text-richblack-5 gap-x-4 p-5 "
+                    placeholder="-"
+                    style={{
+                      boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+                    }}
+                    className="w-[48px] lg:w-[60px] border-0 bg-richblack-800 rounded-[0.5rem] text-richblack-5 aspect-square text-center focus:border-0 focus:outline-2 focus:outline-yellow-50"
                   />
                 )}
+                containerStyle={{
+                  justifyContent: "space-between",
+                  gap: "0 6px",
+                }}
               />
 
-              <button type="submit" className="text-sm">
+              <button
+                type="submit"
+                className="w-full bg-yellow-50 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900"
+              >
                 Varify Email
               </button>
             </form>
 
-            <div className=" flex ">
-              <Link className="flex just items-center gap-x-2" to="/login">
+            <div className="mt-6 flex items-center justify-between">
+              <Link
+                className="text-richblack-5 flex items-center gap-x-2"
+                to="/signup"
+              >
                 <AiOutlineArrowLeft />
-                <div className="text-sm">Back to login</div>
+                <div className="text-sm">Back to Signup</div>
               </Link>
 
               <button
                 onClick={() => dispatch(sendOtp(signupData.email, navigate))}
-                className=" flex items-center justify-center "
+                className="flex items-center text-blue-100 gap-x-2"
               >
                 <GiBackwardTime className="   text-xl " />
                 Resend it
