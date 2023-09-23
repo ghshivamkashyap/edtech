@@ -35,29 +35,6 @@ function Navbar() {
     fetchSublinks();
   }, []);
 
-  // {
-  //   subLinks.map((sublink) => {
-  //     console.log(sublink.name);
-  //   });
-  // }
-  // const [subLinks, setSubLinks] = useState([]);
-
-  // const fetchSublinks = async () => {
-  //   try {
-  //     const result = await apiConnector("GET", categories.CATEGORIES_API);
-  //     console.log("printing sublinks result");
-  //     console.log(result);
-  //     setSubLinks(result.data.data);
-  //   } catch (err) {
-  //     console.log("could not fetch the categories list");
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchSublinks();
-  // }, []);
-
   const location = useLocation();
   const matchroute = (route) => {
     return matchPath({ path: route }, location.pathname);
@@ -86,7 +63,13 @@ function Navbar() {
                       {subLinks.length ? (
                         <div>
                           {subLinks.map((subLink, index) => (
-                            <Link to={`/${subLink.name}`} key={index}>
+                            <Link
+                              to={`catalog/${subLink.name
+                                .split(" ")
+                                .join("-")
+                                .toLowerCase()}`}
+                              key={index}
+                            >
                               <p>{subLink.name}</p>
                             </Link>
                           ))}
@@ -118,11 +101,14 @@ function Navbar() {
           {/* cart  */}
           {user && user?.accountType !== "Instructor" && (
             <Link className=" relative " to="/dashboard/cart">
-              <AiOutlineShoppingCart size={25} className=" text-white items-center justify-center " />
+              <AiOutlineShoppingCart
+                size={25}
+                className=" text-white items-center justify-center "
+              />
               {totalItems > 0 && <span>{totalItems}</span>}
             </Link>
           )}
-      
+
           {token !== null && <ProfileDropdown />}
 
           {/* login btn  */}

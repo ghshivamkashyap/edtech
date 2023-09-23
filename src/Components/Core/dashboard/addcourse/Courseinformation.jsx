@@ -16,15 +16,19 @@ import Iconbtn from "../../../Common/Iconbtn";
 import courseSlice, {
   setStep,
   setCourse,
+  setEditCourse,
+  // editCourse,
 } from "../../../../slices/courseSlice";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import Upload from "./Upload";
+import { useNavigate } from "react-router-dom";
 
 function Courseinformation() {
   const { course, editCourse } = useSelector((state) => state.course);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [courseCategories, setCourseCategories] = useState([]);
   const {
@@ -136,9 +140,9 @@ function Courseinformation() {
       } else {
         toast.error("NO Changes made so far");
       }
-      console.log("PRINTING FORMDATA", formData);
-      console.log("PRINTING result", result);
-
+      // console.log("PRINTING FORMDATA", formData);
+      // console.log("PRINTING result", result);
+      navigate("/dashboard/my-courses");
       return;
     }
 
@@ -153,7 +157,7 @@ function Courseinformation() {
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STATUS.DRAFT);
     formData.append("tag", JSON.stringify(data.courseTags));
-    formData.append("thumbnailImage", data.courseImage)
+    formData.append("thumbnailImage", data.courseImage);
 
     setLoading(true);
     console.log("BEFORE add course API call");

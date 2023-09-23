@@ -3,8 +3,8 @@ import Iconbtn from "./Iconbtn";
 
 function Confirmationmodal({ modalData }) {
   return (
-    <div className=" flex  absolute  mt-[13%] border   border-richblack-200 items-center  ml-[40%] bg-richblack-700 rounded-md p-4  h-[100wh] justify-center text-richblack-25 ">
-      <div>
+    <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10  backdrop-blur-sm   ">
+      <div className="w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6">
         <p className=" text-richblack-25 text-xl font-semibold ">
           {modalData.text1}
         </p>
