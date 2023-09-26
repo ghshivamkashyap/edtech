@@ -41,7 +41,7 @@ function Navbar() {
   };
 
   return (
-    <div className="border-b-[1px] h-10 border-richblack-400 justify-center items-center max-w-full flex">
+    <div className="border-b-[1px]   z-50 h-10 border-richblack-400 justify-center items-center max-w-full flex">
       <div className=" flex items-center text-center w-[80%]  justify-between  bg-richblack-900 text-white  ">
         {/* logo  */}
         <Link to="/" className=" w-32 ">
