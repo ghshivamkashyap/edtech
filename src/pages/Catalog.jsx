@@ -86,7 +86,7 @@ function Catalog() {
         <CourseSlider
           courses={catalogPageData?.data?.differentCategory?.[0]?.courses}
         />
-        {console.log("asla : ",catalogPageData?.data?.differentCategory?.[0]?.courses)}
+        {/* {console.log("asla : ",catalogPageData?.data?.differentCategory?.[0]?.courses)} */}
       </div>
 
       {/* section 3 */}

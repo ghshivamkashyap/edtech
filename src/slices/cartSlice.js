@@ -1,6 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Toast } from "react-hot-toast";
 import { toast } from "react-hot-toast";
+
+// const initialState = {
+//   cart: localStorage.getItem("cart")
+//     ? JSON.parse(localStorage.getItem("cart"))
+//     : [],
+//   total: localStorage.getItem("total")
+//     ? JSON.parse(localStorage.getItem("total"))
+//     : 0,
+//   totalItems: localStorage.getItem("totalItems")
+//     ? JSON.parse(localStorage.getItem("totalItems"))
+//     : 0,
+// };
 
 const initialState = {
   cart: localStorage.getItem("cart")
@@ -13,22 +24,6 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("totalItems"))
     : 0,
 };
-
-// const cartSlice = createSlice({
-//   name: "cart",
-//   initialState: initialState,
-//   reducers: {
-//     setTotalItems(state, value) {
-//       state.user = value.payload;
-//     },
-
-//     // add to cart
-//     // remove from cart
-//     // reset cart
-//   },
-// });
-
-// export const { setTotalItems } = cartSlice.actions;
 
 const cartSlice = createSlice({
   name: "cart",
@@ -47,7 +42,8 @@ const cartSlice = createSlice({
       state.cart.push(course);
       // Update the total quantity and price
       state.totalItems++;
-      state.total += course.price;
+      state.total += course?.price;
+      console.log(course)
       // Update to localstorage
       localStorage.setItem("cart", JSON.stringify(state.cart));
       localStorage.setItem("total", JSON.stringify(state.total));

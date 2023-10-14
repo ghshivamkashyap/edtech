@@ -100,12 +100,12 @@ function Navbar() {
         <div className=" flex  gap-x-4  ">
           {/* cart  */}
           {user && user?.accountType !== "Instructor" && (
-            <Link className=" relative " to="/dashboard/cart">
+            <Link className=" relative items-center justify-center   " to="/dashboard/cart">
               <AiOutlineShoppingCart
                 size={25}
-                className=" text-white items-center justify-center "
+                className=" text-white z-20 mt-2 "
               />
-              {totalItems > 0 && <span>{totalItems}</span>}
+              {totalItems > 0 && <span className=" text-xs  bg-richblack-5 text-richblack-800 w-4  rounded-full absolute left-2  top-1 z-10 ">{totalItems}</span>}
             </Link>
           )}
 
