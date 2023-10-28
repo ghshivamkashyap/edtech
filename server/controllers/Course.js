@@ -363,6 +363,7 @@ exports.getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
     const userId = req.user.id;
+    console.log("line 366 backe course.js api : ", courseId, userId);
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -387,7 +388,7 @@ exports.getFullCourseDetails = async (req, res) => {
       userId: userId,
     });
 
-    console.log("courseProgressCount is this => ", courseProgressCount);
+    // console.log("courseProgressCount is this => ", courseDetails);
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -406,7 +407,7 @@ exports.getFullCourseDetails = async (req, res) => {
     });
 
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
-
+    console.log("course details is this => ", courseDetails);
     return res.status(200).json({
       success: true,
       data: {

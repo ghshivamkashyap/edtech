@@ -14,6 +14,7 @@ const viewCourseSlice = createSlice({
     setCourseSectionData: (state, action) => {
       state.courseSectionData = action.payload;
     },
+   
     setEntireCourseData: (state, action) => {
       state.courseEntireData = action.payload;
     },
