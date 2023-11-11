@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Player } from "video-react";
+import "~video-react/dist/video-react.css";
+import { AiFillPlayCircle } from "react-icons/ai";
+import Iconbtn from "../../Common/Iconbtn";
 
 const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams();
@@ -149,7 +153,69 @@ const VideoDetails = () => {
     // console.log(courseSectionData);
     setVideoSpecificDetails();
   }, [courseSectionData, courseEntireData, location.pathname]);
-  return <div className=" ">i am a video</div>;
+  return (
+    <div className=" ">
+      {!videoData ? (
+        <div>no data found</div>
+      ) : (
+        <Player
+          ref={playerRef}
+          aspectRatio="16:9"
+          playsInline
+          onEnded={() => setVideoEnded(true)}
+          src={videoData?.videoUrl}
+        >
+          <AiFillPlayCircle />
+
+          {videoEnded && (
+            <div>
+              {!completedLectures.includes(subSectionId) && (
+                <Iconbtn
+                  disabled={loading}
+                  onClick={() => handleLectureCompletion()}
+                  text={!loading ? "Mark As Completed" : "Loading..."}
+                />
+              )}
+
+              <Iconbtn
+                disabled={loading}
+                onClick={() => {
+                  if (playerRef.current) {
+                    playerRef.current?.seek(0);
+                    setVideoEnded(false);
+                  }
+                }}
+                text="Rewatch"
+                customClasses="text-xl"
+              />
+              <div>
+                {!isFirstVideo() && (
+                  <button
+                    disabled={loading}
+                    onClick={goToPrevVideo}
+                    className="blackButton"
+                  >
+                    Prev
+                  </button>
+                )}
+                {!isLastVideo() && (
+                  <button
+                    disabled={loading}
+                    onClick={goToNextVideo}
+                    className="blackButton"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </Player>
+      )}
+      <h1>{videoData?.title}</h1>
+      <p>{videoData?.description}</p>
+    </div>
+  );
 };
 
 export default VideoDetails;

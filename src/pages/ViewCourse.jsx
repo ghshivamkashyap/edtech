@@ -9,6 +9,7 @@ import {
   setEntireCourseData,
   setTotalNoOfLectures,
 } from "../slices/viewCourseSlice";
+
 import VideoDetailsSidebar from "../Components/Core/viewcourse/VideoDetailsSidebar";
 import CourseReviewModal from "../Components/Core/viewcourse/CourseReviewModal";
 
