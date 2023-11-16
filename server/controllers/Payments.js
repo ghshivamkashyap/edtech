@@ -10,6 +10,7 @@ const {
 } = require("../mail/templates/paymentSuccessEmail");
 const { default: mongoose, Mongoose } = require("mongoose");
 const crypto = require("crypto");
+const CourseProgress = require("../models/CourseProgress");
 
 exports.capturePayment = async (req, res) => {
   const { courses } = req.body;
@@ -148,10 +149,19 @@ const enrollStudent = async (courses, userId, res) => {
           .json({ success: false, message: "Course not Found" });
       }
 
+      // course progress bhi create kar do 0 se initialise kar ke
+      const courseProgress = await CourseProgress.create({
+        courseID: courseId,
+        userId: userId,
+        completedVideos: [],
+      });
+
+      // is progress ko student ke data me dal od bha
+
       // student ki courses me bhi ye vala course dal do bhai
       const enrolledStudent = await User.findByIdAndUpdate(
         { _id: userId },
-        { $push: { courses: courseId } },
+        { $push: { courses: courseId, courseProgress: courseProgress._id } },
         { new: true }
       );
 
@@ -185,7 +195,6 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
     });
   }
 
-  
   try {
     //student ko dhundo
     const enrolledStudent = await User.findById(userId);

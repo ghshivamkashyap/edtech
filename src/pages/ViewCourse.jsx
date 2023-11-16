@@ -35,9 +35,9 @@ function ViewCourse() {
   }, []);
 
   return (
-    <div className=" flex relative min-h-[calc(100vh-2.5rem)] text-richblack-25 ">
+    <div className=" w-[100vw] flex relative min-h-[calc(100vh-2.5rem)] text-richblack-25 ">
       <VideoDetailsSidebar setReviewModal={setReviewModal} />
-      <div className="min-h-[100vh] overflow-x-hidden ">
+      <div className="min-h-[100vh] w-[80vw] overflow-x-hidden ">
         <div className=" mx-auto py-10 ">
           <Outlet />
         </div>

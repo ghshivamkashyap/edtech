@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Player } from "video-react";
-import "~video-react/dist/video-react.css";
+import "video-react/dist/video-react.css";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Iconbtn from "../../Common/Iconbtn";
+import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
+import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
 
 const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams();
@@ -23,7 +25,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ]?.subSectionId.findIndex((data) => data._id === subSectionId);
+    ]?.subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSectionIndex === 0 && currentSubSectionIndex === 0) {
       return true;
@@ -42,7 +44,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (
       currentSectionIndex === courseSectionData.length - 1 &&
@@ -64,7 +66,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndex !== noOfSubSections - 1) {
       //same section ki next video me jao
@@ -80,7 +82,7 @@ const VideoDetails = () => {
       //different section ki first video
       const nextSectionId = courseSectionData[currentSectionIndex + 1]._id;
       const nextSubSectionId =
-        courseSectionData[currentSectionIndex + 1].subsection[0]._id;
+        courseSectionData[currentSectionIndex + 1].subSection[0]._id;
       ///iss voide par jao
       navigate(
         `/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`
@@ -98,7 +100,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndex != 0) {
       //same section , prev video
@@ -116,7 +118,7 @@ const VideoDetails = () => {
       const prevSubSectionLength =
         courseSectionData[currentSectionIndex - 1].subSection.length;
       const prevSubSectionId =
-        courseSectionData[currentSectionIndex - 1].subsection[
+        courseSectionData[currentSectionIndex - 1].subSection[
           prevSubSectionLength - 1
         ]._id;
       //iss video par chalge jao
@@ -126,7 +128,18 @@ const VideoDetails = () => {
     }
   };
 
-  const handleLectureCompletion = () => {};
+  const handleLectureCompletion = async () => {
+    setLoading(true);
+    const res = await markLectureAsComplete(
+      { courseId: courseId, subSectionId: subSectionId },
+      token
+    );
+
+    if (res) {
+      dispatch(updateCompletedLectures(subSectionId));
+    }
+    setLoading(false);
+  };
 
   const [videoData, setVideoData] = useState([]);
   const [videoEnded, setVideoEnded] = useState(false);
@@ -143,7 +156,7 @@ const VideoDetails = () => {
           (section) => section?._id === sectionId
         );
 
-        const filteredVideoData = filteredData?.[0]?.subsection.filter(
+        const filteredVideoData = filteredData?.[0]?.subSection.filter(
           (vid) => vid._id === subSectionId
         );
         setVideoData(filteredVideoData[0]);
@@ -161,6 +174,7 @@ const VideoDetails = () => {
         <Player
           ref={playerRef}
           aspectRatio="16:9"
+          autoPlay
           playsInline
           onEnded={() => setVideoEnded(true)}
           src={videoData?.videoUrl}
@@ -180,7 +194,7 @@ const VideoDetails = () => {
               <Iconbtn
                 disabled={loading}
                 onClick={() => {
-                  if (playerRef.current) {
+                  if (playerRef?.current) {
                     playerRef.current?.seek(0);
                     setVideoEnded(false);
                   }
@@ -188,6 +202,7 @@ const VideoDetails = () => {
                 text="Rewatch"
                 customClasses="text-xl"
               />
+
               <div>
                 {!isFirstVideo() && (
                   <button

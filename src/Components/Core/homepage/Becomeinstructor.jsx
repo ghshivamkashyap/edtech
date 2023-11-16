@@ -2,6 +2,7 @@ import React from "react";
 import Instructor from "../../../assets/Images/Instructor.png";
 import Highlightedtext from "./Highlightedtext";
 import Button from "./Button";
+import Reviewslider from "../../Common/Reviewslider";
 
 function Becomeinstructor() {
   return (
@@ -37,6 +38,7 @@ function Becomeinstructor() {
       {/* slider  */}
       <div className=" flex flex-col text-center items-center ">
         <div className="    font-semibold text-4xl   ">Reviews from other learners</div>
+        <Reviewslider/>
       </div>
     </div>
   );
