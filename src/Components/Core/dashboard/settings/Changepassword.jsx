@@ -19,10 +19,23 @@ function Changepassword() {
     formState: { errors },
   } = useForm();
 
+  // const pdata = {
+  //   oldPassword: oldPassword,
+  //   newPassword: newPassword,
+  //   confirmNewPassword: newPassword,
+  // };
+  // console.log(pdata);
+
   const submitPasswordForm = async (data) => {
-    // console.log("password Data - ", data)
+    const pdata = {
+      oldPassword: data.oldPassword,
+      newPassword: data.newPassword,
+      confirmNewPassword: data.newPassword,
+    };
+    // console.log("i am pdata - ", pdata);
     try {
-      await changePassword(token, data);
+      // console.log(data);
+      await changePassword(token, pdata);
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
     }
@@ -92,6 +105,7 @@ function Changepassword() {
             placeholder="Enter New Password"
             className="w-full rounded-[0.5rem] flex items-center justify-center bg-richblack-800 p-[12px] text-richblack-5"
             {...register("newPassword", { required: true })}
+            // {...register("confirmNewPassword")}
           />
           <span
             onClick={() => setShowNewPassword((prev) => !prev)}
@@ -111,7 +125,7 @@ function Changepassword() {
               />
             )}
           </span>
-          {errors.newPassword && (
+          {errors.newPassword && console.log(errors.newPassword) && (
             <span className="-mt-1 text-[12px] text-yellow-100">
               Please enter your New Password.
             </span>

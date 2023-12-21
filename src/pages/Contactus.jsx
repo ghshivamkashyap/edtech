@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../Components/Common/Footer";
-import { AiFillWechat,AiFillGoogleCircle,AiFillPhone } from "react-icons/ai";
+import { AiFillWechat, AiFillGoogleCircle, AiFillPhone } from "react-icons/ai";
 import Contactform from "../Components/Core/aboutpage/Contactform";
 //
 

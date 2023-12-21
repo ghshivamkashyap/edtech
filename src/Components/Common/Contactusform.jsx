@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { apiConnector } from "../../services/apiconnector";
 import { contactusEndpoint } from "../../services/apis";
 import countrycode from "../../data/countrycode.json";
+import { contactUs } from "../../services/operations/contactUsAPI";
 
 function Contactusform() {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ function Contactusform() {
   } = useForm();
 
   const submitContactFoem = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       setLoading(1);
       // const responce = await apiConnector(
@@ -24,8 +25,8 @@ function Contactusform() {
       //   contactusEndpoint.CONTACT_US_API,
       //   data
       // );
-      const responce = { status: "OK" };
-      console.log(responce);
+      const responce = await contactUs(data);
+
       setLoading(0);
     } catch (err) {
       console.log(err);
@@ -40,7 +41,7 @@ function Contactusform() {
         firstName: "",
         lastName: "",
         message: "",
-        phoneNo: "",
+        contactNumber: "",
       });
     }
   }, [isSubmitSuccessful, reset]);
@@ -63,7 +64,7 @@ function Contactusform() {
               name="firstname"
               id="firstname"
               placeholder="Enter first name"
-              {...register("firstname", { required: true })}
+              {...register("firstName", { required: true })}
               style={{
                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
               }}
@@ -85,7 +86,7 @@ function Contactusform() {
               name="lastname"
               id="lastname"
               placeholder="Enter last name"
-              {...register("lastname")}
+              {...register("lastName")}
               style={{
                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
               }}
@@ -134,7 +135,7 @@ function Contactusform() {
             className="  pl-4 flex w-[80px]  rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
             name="dropdown"
             id="dropdown"
-            {...register("countrycode", { required: true })}
+            // {...register("countrycode", { required: true })}
           >
             {countrycode.map((element, index) => {
               return (
@@ -147,10 +148,10 @@ function Contactusform() {
           <input
             required
             type="number"
-            name="phonenumber"
-            id="phonenumber"
+            name="contactNumber"
+            id="contactNumber"
             placeholder="12345 67890"
-            {...register("phonenumber", {
+            {...register("contactNumber", {
               required: { value: true, message: "plese enter phone number" },
               maxLength: { value: 10, message: "invalid phone number" },
               minLength: { value: 8, message: "invalid phone number" },

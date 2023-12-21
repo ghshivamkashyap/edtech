@@ -7,6 +7,7 @@ import { BiEdit } from "react-icons/bi";
 function Myprofile() {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
+  console.log(user);
   return (
     <div className=" gap-y-8  w-[80vw] mx-auto flex  items-center flex-col ">
       <div className=" text-3xl flex w-[650px]   font-semibold text-richblack-25 ">

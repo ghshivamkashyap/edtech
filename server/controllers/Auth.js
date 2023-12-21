@@ -242,6 +242,7 @@ exports.changePassword = async (req, res) => {
 
     // Get old password, new password, and confirm new password from req.body
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
+    console.log(oldPassword, newPassword, confirmNewPassword);
 
     // Validate old password
     const isPasswordMatch = await bcrypt.compare(
