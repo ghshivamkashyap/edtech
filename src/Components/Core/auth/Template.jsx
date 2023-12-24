@@ -9,7 +9,7 @@ function Template({ title, description1, description2, image, formType }) {
   const { loading } = useSelector((state) => state.auth)
 
   return (
-    <div className=" min-h-[calc(100vh-2.5rem)] ">
+    <div className=" mt-16 min-h-[calc(100vh-2.5rem)] ">
       {loading ? (
         <div className="spinner"></div>
       ) : (
