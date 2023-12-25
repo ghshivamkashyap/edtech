@@ -1,14 +1,14 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
 const User = require("../models/User");
-// const Subsection = require("../models/Subsection");
+// const Subsecion = require("../models/Subsecion");
 const Section = require("../models/Section");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
-// const Subsection = require("../models/Subsection");
+// const Subsecion = require("../models/Subsecion");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
 const CourseProgress = require("../models/CourseProgress");
-const Subsection = require("../models/Subsection");
-// const Subsection = require("../models/Subsection");
+const Subsecion = require("../models/Subsecion");
+// const Subsecion = require("../models/Subsecion");
 // Function to create a new course
 exports.createCourse = async (req, res) => {
   try {
@@ -185,7 +185,7 @@ exports.getCourseDetails = async (req, res) => {
       .populate({
         path: "courseContent",
         populate: {
-          path: "Subsection",
+          path: "Subsecion",
         },
       })
       .exec();
@@ -261,7 +261,7 @@ exports.editCourse = async (req, res) => {
       .populate({
         path: "courseContent",
         populate: {
-          path: "Subsection",
+          path: "Subsecion",
         },
       })
       .exec();
@@ -334,10 +334,10 @@ exports.deleteCourse = async (req, res) => {
     for (const sectionId of courseSections) {
       const section = await Section.findById(sectionId);
       if (section) {
-        const Subsections = section.Subsection;
-        for (const SubsectionId of Subsections) {
-          // await Subsection.findByIdAndDelete(SubsectionId);
-          await Subsection.findByIdAndDelete(SubsectionId)
+        const Subsecions = section.Subsecion;
+        for (const SubsecionId of Subsecions) {
+          // await Subsecion.findByIdAndDelete(SubsecionId);
+          await Subsecion.findByIdAndDelete(SubsecionId)
         }
       }
 
@@ -380,7 +380,7 @@ exports.getFullCourseDetails = async (req, res) => {
       .populate({
         path: "courseContent",
         populate: {
-          path: "Subsection",
+          path: "Subsecion",
         },
       })
       .exec();
@@ -402,8 +402,8 @@ exports.getFullCourseDetails = async (req, res) => {
     let totalDurationInSeconds = 0;
 
     courseDetails.courseContent.forEach((content) => {
-      content.Subsection.forEach((Subsection) => {
-        const timeDurationInSeconds = parseInt(Subsection.timeDuration);
+      content.Subsecion.forEach((Subsecion) => {
+        const timeDurationInSeconds = parseInt(Subsecion.timeDuration);
         totalDurationInSeconds += timeDurationInSeconds;
       });
     });
