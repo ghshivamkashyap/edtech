@@ -1,10 +1,12 @@
 // Import necessary modules
 const Section = require("../models/Section");
 const Subsection = require("../models/Subsection");
+// const Subsection = require("../models/Subsection");
+// const subSection = require("../models/subSection");
+// const subSection = require("../models/subSection");
 // const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
-// Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
   try {
     // Extract necessary information from the request body
@@ -26,13 +28,14 @@ exports.createSubSection = async (req, res) => {
     );
     console.log(uploadDetails);
     // Create a new sub-section with the necessary information
-    const SubSectionDetails = await SubSection.create({
+    const SubSectionDetails = await Subsection.create({
       title: title,
       timeDuration: `${uploadDetails.duration}`,
       description: description,
       videoUrl: uploadDetails.secure_url,
     });
-
+    
+// await Subsection
     // Update the corresponding section with the newly created sub-section
     const updatedSection = await Section.findByIdAndUpdate(
       { _id: sectionId },
@@ -57,7 +60,9 @@ exports.updateSubSection = async (req, res) => {
   try {
     const { sectionId, subSectionId, title, description } = req.body;
     // const subSection = await SubSection.findById(subSectionId);
-    const subSection = await Subsection.findById(subSectionId);
+    // const subSection = await subSection.findById(subSectionId);
+    // const subSection= await subSection.find
+    const subSection= await Subsection.findById(subSectionId)
 
     if (!subSection) {
       return res.status(404).json({
