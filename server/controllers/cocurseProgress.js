@@ -43,7 +43,8 @@
 // };
 
 const CourseProgress = require("../models/CourseProgress");
-const SubSection = require("../models/SubSection"); // Updated import statement
+const SubSection = require("../models/SubSection");
+// const SubSection = require("../models/SubSection"); // Updated import statement
 
 exports.updateCourseProgress = async (req, res) => {
   const { courseId, subSectionId } = req.body;
@@ -51,7 +52,8 @@ exports.updateCourseProgress = async (req, res) => {
 
   try {
     // check valid subsection
-    const subSection = await SubSection.findById(subSectionId);
+    // const subSection = await SubSection.findById(subSectionId);
+    const subSection = await  SubSection.findById(subSectionId);
     if (!subSection) {
       return res.status(404).json({ error: "invalid subsection" });
     }
