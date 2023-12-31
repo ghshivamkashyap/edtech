@@ -43,7 +43,7 @@
 // };
 
 const CourseProgress = require("../models/CourseProgress");
-const SubSection = require("../models/subSection"); // Updated import statement
+const SubSection = require("../models/SubSection"); // Updated import statement
 
 exports.updateCourseProgress = async (req, res) => {
   const { courseId, subSectionId } = req.body;
